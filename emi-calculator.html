@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>EMI Calculator | SmartToolsHub</title>
+  
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-BKYBMSDS2Q"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-BKYBMSDS2Q');
+</script>
+<link rel="stylesheet" href="style.css">
+
+<style>
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:Arial,sans-serif;
+}
+
+body{
+background:linear-gradient(135deg,#2563eb,#0f172a);
+min-height:100vh;
+display:flex;
+justify-content:center;
+align-items:center;
+padding:20px;
+}
+
+.container{
+width:100%;
+max-width:520px;
+background:#fff;
+padding:30px;
+border-radius:18px;
+box-shadow:0 15px 40px rgba(0,0,0,.2);
+}
+
+h1{
+text-align:center;
+color:#2563eb;
+margin-bottom:25px;
+}
+
+.input-group{
+margin-bottom:18px;
+}
+
+label{
+display:block;
+font-weight:bold;
+margin-bottom:8px;
+}
+
+input{
+width:100%;
+padding:14px;
+font-size:16px;
+border:2px solid #ddd;
+border-radius:10px;
+outline:none;
+}
+
+input:focus{
+border-color:#2563eb;
+}
+
+.buttons{
+display:flex;
+gap:10px;
+margin-top:20px;
+}
+
+button{
+flex:1;
+padding:14px;
+border:none;
+border-radius:10px;
+font-size:16px;
+font-weight:bold;
+cursor:pointer;
+}
+
+.calculate{
+background:#2563eb;
+color:#fff;
+}
+
+.reset{
+background:#ef4444;
+color:#fff;
+}
+
+.result{
+display:none;
+margin-top:25px;
+background:#f8fafc;
+padding:20px;
+border-radius:12px;
+}
+
+.result h2{
+text-align:center;
+color:#16a34a;
+margin-bottom:15px;
+}
+
+.result p{
+font-size:18px;
+margin:10px 0;
+}
+
+.back{
+display:block;
+margin-top:20px;
+text-align:center;
+text-decoration:none;
+font-weight:bold;
+color:#2563eb;
+}
+</style>
+
+</head>
+
+<body>
+
+<div class="container">
+
+<h1>💰 EMI Calculator</h1>
+
+<div class="input-group">
+<label>Loan Amount (₹)</label>
+<input type="number" id="loan" placeholder="Enter Loan Amount">
+</div>
+
+<div class="input-group">
+<label>Annual Interest Rate (%)</label>
+<input type="number" id="rate" placeholder="Enter Interest Rate">
+</div>
+
+<div class="input-group">
+<label>Loan Tenure (Years)</label>
+<input type="number" id="years" placeholder="Enter Years">
+</div>
+
+<div class="buttons">
+<button class="calculate" onclick="calculateEMI()">Calculate</button>
+<button class="reset" onclick="resetEMI()">Reset</button>
+</div>
+
+<div class="result" id="resultBox">
+
+<h2>Loan Summary</h2>
+
+<p><strong>Monthly EMI:</strong> ₹ <span id="emi">0</span></p>
+
+<p><strong>Total Interest:</strong> ₹ <span id="interest">0</span></p>
+
+<p><strong>Total Payment:</strong> ₹ <span id="totalPayment">0</span></p>
+
+</div>
+
+<a href="calculators.html" class="back">
+⬅ Back to Calculators
+</a>
+<script>
+
+function calculateEMI(){
+
+const P = parseFloat(document.getElementById("loan").value);
+const annualRate = parseFloat(document.getElementById("rate").value);
+const years = parseFloat(document.getElementById("years").value);
+
+if(isNaN(P) || isNaN(annualRate) || isNaN(years) || P<=0 || annualRate<=0 || years<=0){
+
+alert("Please enter valid values.");
+
+return;
+
+}
+
+const r = annualRate / 12 / 100;
+const n = years * 12;
+
+const emi = (P * r * Math.pow(1+r,n)) / (Math.pow(1+r,n)-1);
+
+const totalPayment = emi * n;
+
+const totalInterest = totalPayment - P;
+
+document.getElementById("emi").innerHTML =
+emi.toFixed(2);
+
+document.getElementById("interest").innerHTML =
+totalInterest.toFixed(2);
+
+document.getElementById("totalPayment").innerHTML =
+totalPayment.toFixed(2);
+
+document.getElementById("resultBox").style.display="block";
+
+}
+
+function resetEMI(){
+
+document.getElementById("loan").value="";
+document.getElementById("rate").value="";
+document.getElementById("years").value="";
+
+document.getElementById("resultBox").style.display="none";
+
+}
+
+</script>
+
+</body>
+</html>

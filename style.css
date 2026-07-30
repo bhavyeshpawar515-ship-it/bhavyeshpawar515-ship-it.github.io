@@ -1,0 +1,391 @@
+/* Google Font */
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Poppins',sans-serif;
+}
+
+body{
+    background:#f5f7fb;
+    color:#222;
+    line-height:1.6;
+}
+
+/* Header */
+
+header{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:18px 8%;
+    background:#0f172a;
+    color:#fff;
+    position:sticky;
+    top:0;
+    z-index:1000;
+}
+
+.logo{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    font-size:26px;
+    font-weight:700;
+}
+
+.logo i{
+    color:#38bdf8;
+}
+
+nav{
+    display:flex;
+    gap:25px;
+}
+
+nav a{
+    color:#fff;
+    text-decoration:none;
+    font-weight:500;
+    transition:.3s;
+}
+
+nav a:hover{
+    color:#38bdf8;
+}
+
+.dark-btn{
+    width:45px;
+    height:45px;
+    border:none;
+    border-radius:50%;
+    background:#1e293b;
+    color:#fff;
+    cursor:pointer;
+    font-size:18px;
+}
+
+/* Hero */
+
+.hero{
+    text-align:center;
+    padding:90px 20px;
+    background:linear-gradient(135deg,#2563eb,#06b6d4);
+    color:#fff;
+}
+
+.hero h1{
+    font-size:48px;
+    margin-bottom:15px;
+}
+
+.hero p{
+    font-size:20px;
+    margin-bottom:30px;
+}
+
+.search-box{
+    max-width:650px;
+    margin:auto;
+    display:flex;
+    overflow:hidden;
+    border-radius:50px;
+    background:#fff;
+}
+
+.search-box input{
+    flex:1;
+    border:none;
+    padding:18px;
+    font-size:17px;
+    outline:none;
+}
+
+.search-box button{
+    width:70px;
+    border:none;
+    background:#2563eb;
+    color:#fff;
+    cursor:pointer;
+    font-size:20px;
+}
+
+/* Sections */
+
+section{
+    padding:70px 8%;
+}
+
+section h2{
+    text-align:center;
+    margin-bottom:35px;
+    font-size:34px;
+}
+
+/* Grid */
+
+.grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+    gap:25px;
+}
+
+/* Category Cards */
+
+.card{
+    background:#fff;
+    padding:35px;
+    text-align:center;
+    border-radius:16px;
+    box-shadow:0 8px 20px rgba(0,0,0,.08);
+    transition:.3s;
+}
+
+.card:hover{
+    transform:translateY(-8px);
+}
+
+.card i{
+    font-size:42px;
+    color:#2563eb;
+    margin-bottom:18px;
+}
+
+.card h3{
+    font-size:22px;
+}
+
+/* Tool Cards */
+
+.tool{
+    background:#fff;
+    padding:25px;
+    border-radius:16px;
+    box-shadow:0 8px 20px rgba(0,0,0,.08);
+}
+
+.tool h3{
+    margin-bottom:10px;
+}
+
+.tool p{
+    color:#555;
+    margin-bottom:20px;
+}
+
+.tool button{
+    width:100%;
+    padding:12px;
+    border:none;
+    border-radius:10px;
+    background:#2563eb;
+    color:#fff;
+    cursor:pointer;
+    font-size:16px;
+    transition:.3s;
+}
+
+.tool button:hover{
+    background:#1d4ed8;
+}
+
+/* Footer */
+
+footer{
+    background:#0f172a;
+    color:#fff;
+    text-align:center;
+    padding:25px;
+    margin-top:40px;
+}
+
+/* Mobile */
+
+@media(max-width:768px){
+
+header{
+    flex-direction:column;
+    gap:15px;
+}
+
+nav{
+    flex-wrap:wrap;
+    justify-content:center;
+}
+
+.hero h1{
+    font-size:34px;
+}
+
+.hero p{
+    font-size:17px;
+}
+
+section h2{
+    font-size:28px;
+}
+
+}
+/* Dark Mode */
+
+body.dark{
+    background:#0f172a;
+    color:#ffffff;
+}
+
+body.dark .card,
+body.dark .tool{
+    background:#1e293b;
+    color:#ffffff;
+}
+
+body.dark .tool p{
+    color:#cbd5e1;
+}
+
+body.dark .search-box{
+    background:#1e293b;
+}
+
+body.dark .search-box input{
+    background:#1e293b;
+    color:#ffffff;
+}
+
+body.dark section{
+    background:#0f172a;
+}
+.card{
+    text-decoration:none;
+    color:#222;
+}
+
+.card:hover{
+    color:#2563eb;
+}
+/* ===== Calculator Page Premium Design ===== */
+
+nav a.active{
+    color:#38bdf8;
+    font-weight:700;
+}
+
+.hero{
+    background:linear-gradient(135deg,#2563eb,#06b6d4);
+    color:#fff;
+    text-align:center;
+    padding:80px 20px;
+}
+
+.hero h1{
+    font-size:42px;
+    margin-bottom:10px;
+}
+
+.hero p{
+    font-size:18px;
+    margin-bottom:30px;
+    opacity:.9;
+}
+
+.search-box{
+    max-width:600px;
+    margin:auto;
+    display:flex;
+    background:#fff;
+    border-radius:50px;
+    overflow:hidden;
+    box-shadow:0 10px 25px rgba(0,0,0,.15);
+}
+
+.search-box input{
+    flex:1;
+    border:none;
+    padding:16px;
+    font-size:17px;
+    outline:none;
+}
+
+.search-box button{
+    width:70px;
+    border:none;
+    background:#2563eb;
+    color:#fff;
+    cursor:pointer;
+    font-size:18px;
+}
+
+.tools{
+    padding:70px 8%;
+}
+
+.tools h2{
+    text-align:center;
+    margin-bottom:35px;
+    font-size:34px;
+}
+
+.grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+    gap:25px;
+}
+
+.tool{
+    background:#fff;
+    border-radius:18px;
+    padding:30px;
+    text-align:center;
+    box-shadow:0 10px 25px rgba(0,0,0,.08);
+    transition:.35s;
+}
+
+.tool:hover{
+    transform:translateY(-8px);
+}
+
+.tool i{
+    font-size:50px;
+    color:#2563eb;
+    margin-bottom:15px;
+}
+
+.tool h3{
+    margin:10px 0;
+}
+
+.tool p{
+    color:#666;
+    margin-bottom:20px;
+}
+
+.tool button{
+    width:100%;
+    padding:12px;
+    border:none;
+    border-radius:10px;
+    background:#2563eb;
+    color:#fff;
+    cursor:pointer;
+    font-size:16px;
+}
+
+.tool button:hover{
+    background:#1d4ed8;
+}
+
+@media(max-width:768px){
+
+.hero h1{
+font-size:32px;
+}
+
+.hero p{
+font-size:16px;
+}
+
+.tools h2{
+font-size:28px;
+}
+
+}

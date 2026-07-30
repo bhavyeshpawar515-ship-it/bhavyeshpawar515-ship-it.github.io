@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Merge PDF | SmartToolsHub</title>
+  
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-BKYBMSDS2Q"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-BKYBMSDS2Q');
+</script>
+<link rel="stylesheet" href="style.css">
+
+<script src="https://unpkg.com/pdf-lib/dist/pdf-lib.min.js"></script>
+<script src="smarttools.js"></script>
+
+<style>
+body{
+margin:0;
+font-family:Arial,sans-serif;
+background:#f5f7fb;
+}
+
+.container{
+max-width:900px;
+margin:40px auto;
+padding:20px;
+}
+
+.card{
+background:#fff;
+border-radius:15px;
+padding:30px;
+box-shadow:0 8px 20px rgba(0,0,0,.1);
+text-align:center;
+}
+
+h1{
+color:#2563eb;
+margin-bottom:10px;
+}
+
+.drop-area{
+border:3px dashed #2563eb;
+border-radius:12px;
+padding:40px 20px;
+margin:25px 0;
+cursor:pointer;
+background:#f8fbff;
+}
+
+.drop-area:hover{
+background:#eef5ff;
+}
+
+input[type=file]{
+display:none;
+}
+
+.file-list{
+margin-top:20px;
+text-align:left;
+}
+
+.file-item{
+padding:12px;
+margin:10px 0;
+background:#f1f5f9;
+border-radius:8px;
+display:flex;
+justify-content:space-between;
+align-items:center;
+}
+
+.merge-btn{
+width:100%;
+padding:15px;
+font-size:18px;
+border:none;
+border-radius:10px;
+background:#2563eb;
+color:#fff;
+cursor:pointer;
+margin-top:20px;
+}
+
+.merge-btn:hover{
+background:#1d4ed8;
+}
+
+.back{
+display:inline-block;
+margin-top:20px;
+text-decoration:none;
+color:#2563eb;
+font-weight:bold;
+}
+</style>
+
+</head>
+
+<body>
+
+<div class="container">
+
+<div class="card">
+
+<h1>📄 Merge PDF</h1>
+
+<p>Select two or more PDF files to merge.</p>
+
+<label class="drop-area" for="pdfFiles">
+<h2>📂 Click Here To Select PDF Files</h2>
+<p>or Drag & Drop PDFs</p>
+</label>
+
+<input
+type="file"
+id="pdfFiles"
+accept=".pdf"
+multiple>
+
+<div id="fileList" class="file-list"></div>
+
+<button class="merge-btn" id="mergeBtn">
+Merge PDF
+</button>
+
+<br>
+
+<a href="pdf-tools.html" class="back">
+⬅ Back to PDF Tools
+</a>
+
+</div>
+
+</div>
+
+<script>
+
+const pdfInput=document.getElementById("pdfFiles");
+const fileList=document.getElementById("fileList");
+
+pdfInput.addEventListener("change",()=>{
+
+fileList.innerHTML="";
+
+Array.from(pdfInput.files).forEach((file,index)=>{
+
+fileList.innerHTML+=`
+<div class="file-item">
+<span>${index+1}. ${file.name}</span>
+</div>
+`;
+
+});
+
+});
+  
+
+</script>
+  <script>
+const pdfInput = document.getElementById("pdfFiles");
+const fileList = document.getElementById("fileList");
+const mergeBtn = document.getElementById("mergeBtn");
+
+pdfInput.addEventListener("change", () => {
+
+    fileList.innerHTML = "";
+
+    Array.from(pdfInput.files).forEach((file, index) => {
+
+        fileList.innerHTML += `
+        <div class="file-item">
+            <span>📄 ${index + 1}. ${file.name}</span>
+        </div>
+        `;
+
+    });
+
+});
+
+mergeBtn.addEventListener("click", mergePDF);
+
+async function mergePDF() {
+
+    const files = pdfInput.files;
+
+    if (files.length < 2) {
+        alert("Please select at least 2 PDF files.");
+        return;
+    }
+
+    try {
+
+        mergeBtn.disabled = true;
+        mergeBtn.innerHTML = "Merging...";
+
+        const mergedPdf = await PDFLib.PDFDocument.create();
+
+        for (const file of files) {
+
+            const bytes = await file.arrayBuffer();
+
+            const pdf = await PDFLib.PDFDocument.load(bytes);
+
+            const pages = await mergedPdf.copyPages(
+                pdf,
+                pdf.getPageIndices()
+            );
+
+            pages.forEach(page => mergedPdf.addPage(page));
+        }
+
+        const pdfBytes = await mergedPdf.save();
+
+        const blob = new Blob([pdfBytes], {
+            type: "application/pdf"
+        });
+
+        const link = document.createElement("a");
+
+        link.href = URL.createObjectURL(blob);
+
+        link.download = "Merged.pdf";
+
+        link.click();
+
+        URL.revokeObjectURL(link.href);
+
+        mergeBtn.disabled = false;
+        mergeBtn.innerHTML = "Merge PDF";
+
+    } catch (err) {
+
+        alert("Error while merging PDF.");
+
+        console.error(err);
+
+        mergeBtn.disabled = false;
+        mergeBtn.innerHTML = "Merge PDF";
+    }
+
+}
+</script>
+
+</body>
+</html>

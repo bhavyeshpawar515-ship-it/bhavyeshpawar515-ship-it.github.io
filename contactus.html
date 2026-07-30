@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Contact Us - SmartToolsHub</title>
+  
+
+    <style>
+
+        *{
+            margin:0;
+            padding:0;
+            box-sizing:border-box;
+            font-family:Arial,sans-serif;
+        }
+
+        body{
+            background:linear-gradient(135deg,#2563eb,#0f172a);
+            min-height:100vh;
+            padding:20px;
+        }
+
+        .container{
+            max-width:800px;
+            margin:40px auto;
+        }
+
+        .card{
+            background:#ffffff;
+            padding:40px;
+            border-radius:20px;
+            box-shadow:0 10px 30px rgba(0,0,0,0.2);
+        }
+
+        h1{
+            text-align:center;
+            color:#2563eb;
+            margin-bottom:20px;
+        }
+
+        p{
+            text-align:center;
+            color:#555;
+            line-height:1.8;
+            margin-bottom:30px;
+        }
+
+        .input-group{
+            margin-bottom:20px;
+        }
+
+        label{
+            display:block;
+            margin-bottom:8px;
+            font-weight:bold;
+            color:#333;
+        }
+
+        input,
+        textarea{
+
+            width:100%;
+            padding:14px;
+            border:2px solid #ddd;
+            border-radius:10px;
+            font-size:16px;
+            outline:none;
+
+        }
+
+        input:focus,
+        textarea:focus{
+
+            border-color:#2563eb;
+
+        }
+
+        textarea{
+
+            height:150px;
+            resize:none;
+
+        }
+
+        button{
+
+            width:100%;
+            padding:15px;
+            border:none;
+            border-radius:10px;
+            background:#2563eb;
+            color:#fff;
+            font-size:18px;
+            font-weight:bold;
+            cursor:pointer;
+
+        }
+
+        button:hover{
+
+            background:#1d4ed8;
+
+        }
+
+        .back{
+
+            display:block;
+            text-align:center;
+            margin-top:25px;
+            text-decoration:none;
+            color:#2563eb;
+            font-weight:bold;
+
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+    <div class="container">
+
+        <div class="card">
+
+            <h1>📩 Contact Us</h1>
+
+            <p>
+                Have any questions or suggestions?
+                Feel free to contact us.
+            </p>
+
+            <form>
+
+                <div class="input-group">
+
+                    <label>Your Name</label>
+
+                    <input type="text" placeholder="Enter your name">
+
+                </div>
+
+                <div class="input-group">
+
+                    <label>Email Address</label>
+
+                    <input type="email" placeholder="Enter your email">
+
+                </div>
+
+                <div class="input-group">
+
+                    <label>Message</label>
+
+                    <textarea placeholder="Write your message"></textarea>
+
+                </div>
+
+                <button type="submit">
+                    Send Message
+                </button>
+
+            </form>
+
+            <a href="index.html" class="back">
+                ⬅ Back to Home
+            </a>
+
+        </div>
+
+    </div>
+<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+
+<script>
+
+emailjs.init({
+    publicKey: "emNY1irhxucVuwGX_"
+});
+
+document.querySelector("form").addEventListener("submit", function(e) {
+
+    e.preventDefault();
+
+    const name = document.querySelector('input[type="text"]').value;
+    const email = document.querySelector('input[type="email"]').value;
+    const message = document.querySelector("textarea").value;
+
+    emailjs.send("service_7hi9ylo", "template_1m7cd0l", {
+        name: name,
+        email: email,
+        message: message
+    })
+
+    .then(function(response) {
+
+        alert("Message sent successfully!");
+
+        document.querySelector("form").reset();
+
+        console.log(response);
+
+    })
+
+    .catch(function(error) {
+
+        alert(
+            "Status: " + error.status +
+            "\nMessage: " + error.text
+        );
+
+        console.log(error);
+
+    });
+
+});
+
+</script>
+</body>
+
+</html>

@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Percentage Calculator | SmartToolsHub</title>
+  
+  <!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-BKYBMSDS2Q"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-BKYBMSDS2Q');
+</script>
+
+<link rel="stylesheet" href="style.css">
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:Arial,sans-serif;
+}
+
+body{
+
+background:linear-gradient(135deg,#2563eb,#0f172a);
+
+min-height:100vh;
+
+display:flex;
+
+justify-content:center;
+
+align-items:center;
+
+padding:20px;
+
+}
+
+.container{
+
+width:100%;
+
+max-width:500px;
+
+background:#fff;
+
+border-radius:18px;
+
+padding:30px;
+
+box-shadow:0 15px 40px rgba(0,0,0,.25);
+
+}
+
+h1{
+
+text-align:center;
+
+color:#2563eb;
+
+margin-bottom:25px;
+
+}
+
+.input-group{
+
+margin-bottom:18px;
+
+}
+
+label{
+
+display:block;
+
+font-weight:bold;
+
+margin-bottom:8px;
+
+color:#333;
+
+}
+
+input{
+
+width:100%;
+
+padding:14px;
+
+font-size:17px;
+
+border:2px solid #ddd;
+
+border-radius:10px;
+
+outline:none;
+
+}
+
+input:focus{
+
+border-color:#2563eb;
+
+}
+
+.buttons{
+
+display:flex;
+
+gap:10px;
+
+margin-top:20px;
+
+}
+
+button{
+
+flex:1;
+
+padding:14px;
+
+border:none;
+
+border-radius:10px;
+
+font-size:17px;
+
+cursor:pointer;
+
+font-weight:bold;
+
+}
+
+.calculate{
+
+background:#2563eb;
+
+color:white;
+
+}
+
+.calculate:hover{
+
+background:#1d4ed8;
+
+}
+
+.reset{
+
+background:#ef4444;
+
+color:white;
+
+}
+
+.reset:hover{
+
+background:#dc2626;
+
+}
+
+.result{
+
+margin-top:25px;
+
+background:#f8fafc;
+
+padding:20px;
+
+border-radius:12px;
+
+display:none;
+
+text-align:center;
+
+}
+
+.result h2{
+
+color:#16a34a;
+
+margin-bottom:10px;
+
+}
+
+.result p{
+
+font-size:30px;
+
+font-weight:bold;
+
+color:#2563eb;
+
+}
+
+.back{
+
+display:block;
+
+text-align:center;
+
+margin-top:25px;
+
+text-decoration:none;
+
+font-weight:bold;
+
+color:#2563eb;
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="container">
+
+<h1>📊 Percentage Calculator</h1>
+
+<div class="input-group">
+
+<label>Total Value</label>
+
+<input
+type="number"
+id="total"
+placeholder="Enter Total">
+
+</div>
+
+<div class="input-group">
+
+<label>Obtained Value</label>
+
+<input
+type="number"
+id="obtained"
+placeholder="Enter Obtained">
+
+</div>
+
+<div class="buttons">
+
+<button class="calculate"
+onclick="calculatePercentage()">
+
+Calculate
+
+</button>
+
+<button class="reset"
+onclick="resetCalculator()">
+
+Reset
+
+</button>
+
+</div>
+
+<div
+class="result"
+id="resultBox">
+
+<h2>Your Percentage</h2>
+
+<p id="percentageResult">0%</p>
+
+</div>
+
+<a
+href="calculators.html"
+class="back">
+
+⬅ Back to Calculators
+
+</a>
+
+</div>
+<script>
+
+function calculatePercentage(){
+
+const total = parseFloat(document.getElementById("total").value);
+
+const obtained = parseFloat(document.getElementById("obtained").value);
+
+if(isNaN(total) || isNaN(obtained) || total<=0){
+
+alert("Please enter valid values.");
+
+return;
+
+}
+
+if(obtained>total){
+
+alert("Obtained value cannot be greater than Total value.");
+
+return;
+
+}
+
+const percentage=((obtained/total)*100).toFixed(2);
+
+document.getElementById("percentageResult").innerHTML=percentage+" %";
+
+document.getElementById("resultBox").style.display="block";
+
+}
+
+function resetCalculator(){
+
+document.getElementById("total").value="";
+
+document.getElementById("obtained").value="";
+
+document.getElementById("resultBox").style.display="none";
+
+}
+
+</script>
+
+</body>
+</html>

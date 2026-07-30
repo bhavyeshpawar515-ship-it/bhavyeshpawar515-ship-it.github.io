@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Age Calculator | SmartToolsHub</title>
+  
+  <!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-BKYBMSDS2Q"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-BKYBMSDS2Q');
+</script>
+
+<style>
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:Arial,sans-serif;
+}
+
+body{
+background:#f5f7fb;
+display:flex;
+justify-content:center;
+align-items:center;
+min-height:100vh;
+}
+
+.container{
+background:#fff;
+padding:30px;
+border-radius:15px;
+box-shadow:0 10px 25px rgba(0,0,0,.1);
+width:90%;
+max-width:450px;
+}
+
+h1{
+text-align:center;
+margin-bottom:20px;
+color:#2563eb;
+}
+
+input{
+width:100%;
+padding:12px;
+font-size:18px;
+margin:15px 0;
+border:1px solid #ccc;
+border-radius:10px;
+}
+
+button{
+width:100%;
+padding:14px;
+background:#2563eb;
+color:#fff;
+border:none;
+border-radius:10px;
+font-size:18px;
+cursor:pointer;
+}
+
+button:hover{
+background:#1d4ed8;
+}
+
+#result{
+margin-top:20px;
+text-align:center;
+font-size:20px;
+font-weight:bold;
+}
+</style>
+
+</head>
+<body>
+
+<div class="container">
+
+<h1>Age Calculator</h1>
+
+<input type="date" id="dob">
+
+<button onclick="calculateAge()">
+Calculate Age
+</button>
+
+<div id="result"></div>
+
+</div>
+
+<script>
+
+function calculateAge(){
+
+let dob=document.getElementById("dob").value;
+
+if(dob==""){
+alert("Please select your Date of Birth");
+return;
+}
+
+let birth=new Date(dob);
+
+let today=new Date();
+
+let age=today.getFullYear()-birth.getFullYear();
+
+let month=today.getMonth()-birth.getMonth();
+
+if(month<0 || (month===0 && today.getDate()<birth.getDate())){
+age--;
+}
+
+document.getElementById("result").innerHTML=
+"Your Age is <br><span style='color:#2563eb;'>"+age+" Years</span>";
+
+}
+
+</script>
+
+</body>
+</html>
