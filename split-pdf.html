@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Split PDF | SmartToolsHub</title>
+
+    <script async
+        src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1620926024394736"
+        crossorigin="anonymous">
+    </script>
+
+    <link rel="stylesheet" href="style.css">
+
+    <script src="https://unpkg.com/pdf-lib/dist/pdf-lib.min.js"></script>
+
+    <style>
+
+        body{
+            margin:0;
+            font-family:Arial,sans-serif;
+            background:#f5f7fb;
+        }
+
+        .container{
+            max-width:900px;
+            margin:40px auto;
+            padding:20px;
+        }
+
+        .card{
+            background:#fff;
+            border-radius:15px;
+            padding:30px;
+            box-shadow:0 8px 20px rgba(0,0,0,.1);
+            text-align:center;
+        }
+
+        h1{
+            color:#2563eb;
+            margin-bottom:10px;
+        }
+
+        .drop-area{
+            border:3px dashed #2563eb;
+            border-radius:12px;
+            padding:40px 20px;
+            margin:25px 0;
+            cursor:pointer;
+            background:#f8fbff;
+        }
+
+        .drop-area:hover{
+            background:#eef5ff;
+        }
+
+        input[type=file]{
+            display:none;
+        }
+
+        .page-input{
+            width:100%;
+            padding:15px;
+            border:1px solid #ccc;
+            border-radius:10px;
+            font-size:16px;
+            margin-top:15px;
+            box-sizing:border-box;
+        }
+
+        .split-btn{
+            width:100%;
+            padding:15px;
+            margin-top:20px;
+            border:none;
+            border-radius:10px;
+            background:#2563eb;
+            color:#fff;
+            font-size:18px;
+            cursor:pointer;
+        }
+
+        .split-btn:hover{
+            background:#1d4ed8;
+        }
+
+        .back{
+            display:inline-block;
+            margin-top:20px;
+            text-decoration:none;
+            color:#2563eb;
+            font-weight:bold;
+        }
+
+        #fileName{
+            margin-top:15px;
+            color:#555;
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+    <div class="container">
+
+        <div class="card">
+
+            <h1>✂️ Split PDF</h1>
+
+            <p>Select a PDF and enter page numbers.</p>
+
+            <label class="drop-area" for="pdfFile">
+
+                <h2>📂 Click Here To Select PDF</h2>
+
+                <p>Example: 1,2,5</p>
+
+            </label>
+
+            <input type="file"
+                   id="pdfFile"
+                   accept=".pdf">
+
+            <p id="fileName"></p>
+
+            <input type="text"
+                   id="pages"
+                   class="page-input"
+                   placeholder="Enter pages: 1,2,5">
+
+            <button class="split-btn"
+                    id="splitBtn">
+
+                Split PDF
+
+            </button>
+
+            <br>
+
+            <a href="pdf-tools.html"
+               class="back">
+
+                ⬅ Back to PDF Tools
+
+            </a>
+
+        </div>
+
+    </div>
+
+    <script>
+
+        const pdfInput =
+            document.getElementById("pdfFile");
+
+        const fileName =
+            document.getElementById("fileName");
+
+        const splitBtn =
+            document.getElementById("splitBtn");
+
+        pdfInput.addEventListener("change", () => {
+
+            if (pdfInput.files.length > 0) {
+
+                fileName.innerHTML =
+                    "📄 " + pdfInput.files[0].name;
+
+            }
+
+        });
+
+        splitBtn.addEventListener(
+            "click",
+            splitPDF
+        );
+
+        async function splitPDF() {
+
+            const file = pdfInput.files[0];
+
+            const pagesText =
+                document.getElementById("pages").value;
+
+            if (!file) {
+
+                alert("Please select a PDF file.");
+
+                return;
+
+            }
+
+            if (!pagesText) {
+
+                alert("Please enter page numbers.");
+
+                return;
+
+            }
+
+            splitBtn.disabled = true;
+
+            splitBtn.innerHTML = "Splitting...";
+
+            try {
+
+                const bytes =
+                    await file.arrayBuffer();
+
+                const pdf =
+                    await PDFLib.PDFDocument.load(bytes);
+
+                const newPdf =
+                    await PDFLib.PDFDocument.create();
+
+                const pages = pagesText
+                    .split(",")
+                    .map(
+                        p => parseInt(
+                            p.trim()
+                        ) - 1
+                    );
+
+                for (const pageIndex of pages) {
+
+                    if (
+                        pageIndex >= 0 &&
+                        pageIndex <
+                        pdf.getPageCount()
+                    ) {
+
+                        const [page] =
+                            await newPdf.copyPages(
+                                pdf,
+                                [pageIndex]
+                            );
+
+                        newPdf.addPage(page);
+
+                    }
+
+                }
+
+                const pdfBytes =
+                    await newPdf.save();
+
+                const blob =
+                    new Blob(
+                        [pdfBytes],
+                        {
+                            type:
+                            "application/pdf"
+                        }
+                    );
+
+                const link =
+                    document.createElement(
+                        "a"
+                    );
+
+                link.href =
+                    URL.createObjectURL(
+                        blob
+                    );
+
+                link.download =
+                    "Split.pdf";
+
+                link.click();
+
+                URL.revokeObjectURL(
+                    link.href
+                );
+
+                splitBtn.disabled = false;
+
+                splitBtn.innerHTML =
+                    "Split PDF";
+
+            }
+
+            catch (error) {
+
+                alert(
+                    "Error while splitting PDF."
+                );
+
+                console.log(error);
+
+                splitBtn.disabled = false;
+
+                splitBtn.innerHTML =
+                    "Split PDF";
+
+            }
+
+        }
+
+    </script>
+
+</body>
+
+</html>
