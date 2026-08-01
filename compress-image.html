@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Compress Image | SmartToolsHub</title>
+
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1620926024394736"
+crossorigin="anonymous"></script>
+
+<link rel="stylesheet" href="style.css">
+
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.1/css/all.min.css">
+
+<style>
+
+.preview{
+
+    margin-top:20px;
+
+}
+
+.preview img{
+
+    max-width:100%;
+
+    border-radius:10px;
+
+    box-shadow:0 5px 15px rgba(0,0,0,.15);
+
+}
+
+.range-box{
+
+    margin:20px 0;
+
+}
+
+.range-box input{
+
+    width:100%;
+
+}
+
+.download-btn{
+
+    margin-top:20px;
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<header>
+
+<div class="logo">
+
+<i class="fa-solid fa-image"></i>
+
+<span>SmartToolsHub</span>
+
+</div>
+
+<nav>
+
+<a href="index.html">Home</a>
+
+<a href="image-tools.html">Image Tools</a>
+
+</nav>
+
+</header>
+
+<section class="hero">
+
+<h1>🗜️ Compress Image</h1>
+
+<p>Reduce image size online for free</p>
+
+</section>
+
+<section class="tools">
+
+<div class="tool">
+
+<label for="imageInput">
+
+<button>
+
+<i class="fa-solid fa-upload"></i>
+
+Upload Image
+
+</button>
+
+</label>
+
+<input
+type="file"
+id="imageInput"
+accept="image/*"
+hidden>
+
+<div class="range-box">
+
+<p>
+
+Compression Quality:
+
+<span id="qualityValue">70%</span>
+
+</p>
+
+<input
+type="range"
+id="quality"
+min="10"
+max="100"
+value="70">
+
+</div>
+
+<div class="preview">
+
+<img id="preview" style="display:none;">
+
+</div>
+
+<button
+class="download-btn"
+id="downloadBtn">
+
+Download Compressed Image
+
+</button>
+
+</div>
+
+</section>
+
+<footer>
+
+<p>© 2026 SmartToolsHub</p>
+
+</footer>
+
+<script>
+
+const imageInput =
+document.getElementById("imageInput");
+
+const preview =
+document.getElementById("preview");
+
+const quality =
+document.getElementById("quality");
+
+const qualityValue =
+document.getElementById("qualityValue");
+
+const downloadBtn =
+document.getElementById("downloadBtn");
+
+let imageFile;
+
+quality.addEventListener("input", () => {
+
+qualityValue.textContent =
+quality.value + "%";
+
+});
+
+imageInput.addEventListener("change", e => {
+
+imageFile = e.target.files[0];
+
+if (!imageFile) return;
+
+const reader = new FileReader();
+
+reader.onload = function(event) {
+
+preview.src = event.target.result;
+
+preview.style.display = "block";
+
+};
+
+reader.readAsDataURL(imageFile);
+
+});
+
+downloadBtn.addEventListener("click", () => {
+
+if (!imageFile) {
+
+alert("Please upload an image.");
+
+return;
+
+}
+
+const canvas =
+document.createElement("canvas");
+
+const ctx =
+canvas.getContext("2d");
+
+const img =
+new Image();
+
+img.onload = function() {
+
+canvas.width = img.width;
+
+canvas.height = img.height;
+
+ctx.drawImage(img, 0, 0);
+
+canvas.toBlob(
+
+blob => {
+
+const link =
+document.createElement("a");
+
+link.href =
+URL.createObjectURL(blob);
+
+link.download =
+"compressed-image.jpg";
+
+link.click();
+
+},
+
+"image/jpeg",
+
+quality.value / 100
+
+);
+
+};
+
+img.src = preview.src;
+
+});
+
+</script>
+
+</body>
+
+</html>
