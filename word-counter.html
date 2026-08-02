@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Word Counter | SmartToolsHub</title>
+
+<link rel="stylesheet" href="style.css">
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial,sans-serif;
+}
+
+body{
+    background:linear-gradient(135deg,#2563eb,#0f172a);
+    min-height:100vh;
+    padding:20px;
+}
+
+.container{
+    max-width:900px;
+    margin:40px auto;
+    background:#fff;
+    padding:30px;
+    border-radius:20px;
+    box-shadow:0 15px 40px rgba(0,0,0,.2);
+}
+
+h1{
+    text-align:center;
+    color:#2563eb;
+    margin-bottom:20px;
+}
+
+textarea{
+    width:100%;
+    height:250px;
+    padding:15px;
+    border:2px solid #ddd;
+    border-radius:10px;
+    font-size:16px;
+    resize:none;
+    outline:none;
+}
+
+textarea:focus{
+    border-color:#2563eb;
+}
+
+.stats{
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:15px;
+    margin-top:20px;
+}
+
+.box{
+    background:#f8fafc;
+    padding:20px;
+    border-radius:12px;
+    text-align:center;
+}
+
+.box h2{
+    color:#2563eb;
+    font-size:28px;
+}
+
+.box p{
+    margin-top:8px;
+    color:#555;
+}
+
+.buttons{
+    display:flex;
+    gap:10px;
+    margin-top:20px;
+}
+
+button{
+    flex:1;
+    padding:14px;
+    border:none;
+    border-radius:10px;
+    background:#2563eb;
+    color:#fff;
+    font-size:16px;
+    font-weight:bold;
+    cursor:pointer;
+}
+
+button:hover{
+    background:#1d4ed8;
+}
+
+.back{
+    display:block;
+    text-align:center;
+    margin-top:20px;
+    text-decoration:none;
+    color:#2563eb;
+    font-weight:bold;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="container">
+
+<h1>📊 Word Counter</h1>
+
+<textarea
+id="text"
+placeholder="Enter your text here..."
+oninput="countText()"></textarea>
+
+<div class="stats">
+
+<div class="box">
+
+<h2 id="words">0</h2>
+
+<p>Words</p>
+
+</div>
+
+<div class="box">
+
+<h2 id="characters">0</h2>
+
+<p>Characters</p>
+
+</div>
+
+<div class="box">
+
+<h2 id="sentences">0</h2>
+
+<p>Sentences</p>
+
+</div>
+
+<div class="box">
+
+<h2 id="paragraphs">0</h2>
+
+<p>Paragraphs</p>
+
+</div>
+
+</div>
+
+<div class="buttons">
+
+<button onclick="copyText()">
+
+Copy
+
+</button>
+
+<button onclick="clearText()">
+
+Clear
+
+</button>
+
+</div>
+
+<a href="text-tools.html" class="back">
+
+⬅ Back to Text Tools
+
+</a>
+
+</div>
+
+<script>
+
+const textarea =
+document.getElementById("text");
+
+function countText(){
+
+    let text = textarea.value;
+
+    let words = text.trim() === ""
+        ? 0
+        : text.trim().split(/\s+/).length;
+
+    let characters = text.length;
+
+    let sentences =
+        text.split(/[.!?]+/)
+        .filter(s => s.trim() !== "")
+        .length;
+
+    let paragraphs =
+        text.split(/\n+/)
+        .filter(p => p.trim() !== "")
+        .length;
+
+    document.getElementById("words")
+    .innerText = words;
+
+    document.getElementById("characters")
+    .innerText = characters;
+
+    document.getElementById("sentences")
+    .innerText = sentences;
+
+    document.getElementById("paragraphs")
+    .innerText = paragraphs;
+
+}
+
+function copyText(){
+
+    navigator.clipboard
+    .writeText(textarea.value);
+
+    alert("Text copied!");
+
+}
+
+function clearText(){
+
+    textarea.value = "";
+
+    countText();
+
+}
+
+</script>
+
+</body>
+
+</html>

@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Text Case Converter | SmartToolsHub</title>
+
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1620926024394736"
+crossorigin="anonymous"></script>
+
+<link rel="stylesheet" href="style.css">
+
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.1/css/all.min.css">
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial,sans-serif;
+}
+
+body{
+    background:linear-gradient(135deg,#2563eb,#0f172a);
+    min-height:100vh;
+    padding:20px;
+}
+
+.container{
+    max-width:900px;
+    margin:40px auto;
+    background:#fff;
+    padding:30px;
+    border-radius:20px;
+    box-shadow:0 15px 40px rgba(0,0,0,.2);
+}
+
+h1{
+    text-align:center;
+    color:#2563eb;
+    margin-bottom:20px;
+}
+
+textarea{
+    width:100%;
+    height:220px;
+    padding:15px;
+    border:2px solid #ddd;
+    border-radius:10px;
+    font-size:16px;
+    resize:none;
+    outline:none;
+}
+
+textarea:focus{
+    border-color:#2563eb;
+}
+
+.buttons{
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:10px;
+    margin-top:20px;
+}
+
+button{
+    padding:14px;
+    border:none;
+    border-radius:10px;
+    background:#2563eb;
+    color:#fff;
+    font-size:16px;
+    font-weight:bold;
+    cursor:pointer;
+}
+
+button:hover{
+    background:#1d4ed8;
+}
+
+.back{
+
+    display:block;
+    margin-top:20px;
+    text-align:center;
+    text-decoration:none;
+    color:#2563eb;
+    font-weight:bold;
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="container">
+
+<h1>🔠 Text Case Converter</h1>
+
+<textarea
+id="text"
+placeholder="Enter your text here..."></textarea>
+
+<div class="buttons">
+
+<button onclick="toUpperCaseText()">
+UPPERCASE
+</button>
+
+<button onclick="toLowerCaseText()">
+lowercase
+</button>
+
+<button onclick="toTitleCase()">
+Title Case
+</button>
+
+<button onclick="toSentenceCase()">
+Sentence case
+</button>
+
+<button onclick="copyText()">
+Copy Text
+</button>
+
+<button onclick="clearText()">
+Clear
+</button>
+
+</div>
+
+<a href="text-tools.html" class="back">
+
+⬅ Back to Text Tools
+
+</a>
+
+</div>
+
+<script>
+
+const textarea =
+document.getElementById("text");
+
+function toUpperCaseText(){
+
+    textarea.value =
+    textarea.value.toUpperCase();
+
+}
+
+function toLowerCaseText(){
+
+    textarea.value =
+    textarea.value.toLowerCase();
+
+}
+
+function toTitleCase(){
+
+    textarea.value =
+    textarea.value.toLowerCase()
+    .replace(/\b\w/g,
+    char => char.toUpperCase());
+
+}
+
+function toSentenceCase(){
+
+    let text =
+    textarea.value.toLowerCase();
+
+    textarea.value =
+    text.charAt(0).toUpperCase()
+    + text.slice(1);
+
+}
+
+function copyText(){
+
+    navigator.clipboard
+    .writeText(textarea.value);
+
+    alert("Text copied!");
+
+}
+
+function clearText(){
+
+    textarea.value = "";
+
+}
+
+</script>
+
+</body>
+
+</html>

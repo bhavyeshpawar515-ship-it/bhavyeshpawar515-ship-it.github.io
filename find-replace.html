@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport"
+content="width=device-width, initial-scale=1.0">
+
+<title>Find & Replace | SmartToolsHub</title>
+
+<link rel="stylesheet" href="style.css">
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial,sans-serif;
+}
+
+body{
+    background:linear-gradient(135deg,#2563eb,#0f172a);
+    min-height:100vh;
+    padding:20px;
+}
+
+.container{
+    max-width:900px;
+    margin:40px auto;
+    background:#fff;
+    padding:30px;
+    border-radius:20px;
+    box-shadow:0 15px 40px rgba(0,0,0,.2);
+}
+
+h1{
+    text-align:center;
+    color:#2563eb;
+    margin-bottom:20px;
+}
+
+textarea{
+    width:100%;
+    height:220px;
+    padding:15px;
+    border:2px solid #ddd;
+    border-radius:10px;
+    font-size:16px;
+    resize:none;
+    outline:none;
+}
+
+textarea:focus{
+    border-color:#2563eb;
+}
+
+.input-group{
+    margin-top:15px;
+}
+
+input{
+    width:100%;
+    padding:14px;
+    border:2px solid #ddd;
+    border-radius:10px;
+    outline:none;
+    font-size:16px;
+}
+
+input:focus{
+    border-color:#2563eb;
+}
+
+.buttons{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:10px;
+    margin-top:20px;
+}
+
+button{
+    padding:14px;
+    border:none;
+    border-radius:10px;
+    background:#2563eb;
+    color:#fff;
+    font-size:16px;
+    font-weight:bold;
+    cursor:pointer;
+}
+
+button:hover{
+    background:#1d4ed8;
+}
+
+.result{
+    margin-top:20px;
+}
+
+.back{
+    display:block;
+    margin-top:20px;
+    text-align:center;
+    text-decoration:none;
+    color:#2563eb;
+    font-weight:bold;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="container">
+
+<h1>🔍 Find & Replace</h1>
+
+<textarea
+id="inputText"
+placeholder="Enter your text here..."></textarea>
+
+<div class="input-group">
+
+<input
+type="text"
+id="findText"
+placeholder="Find">
+
+</div>
+
+<div class="input-group">
+
+<input
+type="text"
+id="replaceText"
+placeholder="Replace with">
+
+</div>
+
+<div class="buttons">
+
+<button onclick="findReplace()">
+
+Replace
+
+</button>
+
+<button onclick="copyText()">
+
+Copy
+
+</button>
+
+<button onclick="clearText()">
+
+Clear
+
+</button>
+
+</div>
+
+<div class="result">
+
+<textarea
+id="outputText"
+placeholder="Result..."
+readonly></textarea>
+
+</div>
+
+<a href="text-tools.html" class="back">
+
+⬅ Back to Text Tools
+
+</a>
+
+</div>
+
+<script>
+
+function findReplace(){
+
+    const input = document
+        .getElementById("inputText")
+        .value;
+
+    const find = document
+        .getElementById("findText")
+        .value;
+
+    const replace = document
+        .getElementById("replaceText")
+        .value;
+
+    if(find === ""){
+
+        alert("Please enter text to find.");
+
+        return;
+
+    }
+
+    const result = input.split(find).join(replace);
+
+    document.getElementById(
+        "outputText"
+    ).value = result;
+
+}
+
+function copyText(){
+
+    const output = document
+        .getElementById("outputText");
+
+    navigator.clipboard
+        .writeText(output.value);
+
+    alert("Text copied!");
+
+}
+
+function clearText(){
+
+    document.getElementById(
+        "inputText"
+    ).value = "";
+
+    document.getElementById(
+        "findText"
+    ).value = "";
+
+    document.getElementById(
+        "replaceText"
+    ).value = "";
+
+    document.getElementById(
+        "outputText"
+    ).value = "";
+
+}
+
+</script>
+
+</body>
+
+</html>
