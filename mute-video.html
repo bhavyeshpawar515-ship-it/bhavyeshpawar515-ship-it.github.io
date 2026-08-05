@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport"
+content="width=device-width, initial-scale=1.0">
+
+<title>Mute Video | SmartToolsHub</title>
+
+<script src="https://unpkg.com/@ffmpeg/ffmpeg@0.12.10/dist/umd/ffmpeg.js"></script>
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial,sans-serif;
+}
+
+body{
+    background:linear-gradient(135deg,#2563eb,#0f172a);
+    min-height:100vh;
+    padding:20px;
+}
+
+.container{
+    max-width:900px;
+    margin:40px auto;
+    background:#fff;
+    padding:30px;
+    border-radius:20px;
+    box-shadow:0 10px 30px rgba(0,0,0,.2);
+}
+
+h1{
+    text-align:center;
+    color:#2563eb;
+    margin-bottom:20px;
+}
+
+.upload-box{
+    border:3px dashed #2563eb;
+    border-radius:12px;
+    padding:40px;
+    text-align:center;
+    cursor:pointer;
+    margin-bottom:20px;
+}
+
+input[type=file]{
+    display:none;
+}
+
+video{
+    width:100%;
+    border-radius:12px;
+    margin-top:20px;
+    display:none;
+}
+
+button{
+    width:100%;
+    padding:15px;
+    border:none;
+    border-radius:10px;
+    background:#2563eb;
+    color:#fff;
+    font-size:18px;
+    cursor:pointer;
+    margin-top:20px;
+}
+
+button:hover{
+    background:#1d4ed8;
+}
+
+#status{
+    text-align:center;
+    margin-top:20px;
+    font-weight:bold;
+}
+
+.back{
+    display:block;
+    text-align:center;
+    margin-top:20px;
+    text-decoration:none;
+    color:#2563eb;
+    font-weight:bold;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="container">
+
+<h1>🔇 Mute Video</h1>
+
+<label
+for="videoInput"
+class="upload-box">
+
+<h2>📂 Upload Video</h2>
+
+<p>Select MP4, AVI, MOV or MKV</p>
+
+</label>
+
+<input
+type="file"
+id="videoInput"
+accept="video/*">
+
+<video
+id="preview"
+controls>
+</video>
+
+<button onclick="muteVideo()">
+
+Mute Video
+
+</button>
+
+<p id="status"></p>
+
+<a
+href="video-tools.html"
+class="back">
+
+⬅ Back to Video Tools
+
+</a>
+
+</div>
+
+<script>
+
+const videoInput =
+
+document.getElementById(
+
+"videoInput"
+
+);
+
+const preview =
+
+document.getElementById(
+
+"preview"
+
+);
+
+videoInput.addEventListener(
+
+"change",
+async function muteVideo() {
+
+    const file = videoInput.files[0];
+
+    if (!file) {
+
+        alert("Please upload a video.");
+
+        return;
+
+    }
+
+    const status = document.getElementById("status");
+
+    status.innerText = "Loading FFmpeg...";
+
+    const ffmpeg = new FFmpegWASM.FFmpeg();
+
+    await ffmpeg.load({
+
+        coreURL: "./ffmpeg/ffmpeg-core.js",
+
+        wasmURL: "./ffmpeg/ffmpeg-core.wasm",
+
+        workerURL: "./ffmpeg/ffmpeg-core.worker.js"
+
+    });
+
+    status.innerText = "Uploading video...";
+
+    await ffmpeg.writeFile(
+
+        "input.mp4",
+
+        new Uint8Array(
+
+            await file.arrayBuffer()
+
+        )
+
+    );
+
+    status.innerText = "Removing audio...";
+
+    await ffmpeg.exec([
+
+        "-i",
+
+        "input.mp4",
+
+        "-c",
+
+        "copy",
+
+        "-an",
+
+        "output.mp4"
+
+    ]);
+
+    status.innerText = "Preparing download...";
+
+    const data = await ffmpeg.readFile(
+
+        "output.mp4"
+
+    );
+
+    const blob = new Blob(
+
+        [data.buffer],
+
+        {
+
+            type: "video/mp4"
+
+        }
+
+    );
+
+    const url = URL.createObjectURL(blob);
+
+    const a = document.createElement("a");
+
+    a.href = url;
+
+    a.download = "muted-video.mp4";
+
+    a.click();
+
+    URL.revokeObjectURL(url);
+
+    status.innerText = "Done!";
+
+}
+
+</script>
+
+</body>
+
+</html>

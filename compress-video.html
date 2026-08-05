@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport"
+content="width=device-width, initial-scale=1.0">
+
+<title>Compress Video | SmartToolsHub</title>
+
+<script src="https://unpkg.com/@ffmpeg/ffmpeg@0.12.10/dist/umd/ffmpeg.js"></script>
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial,sans-serif;
+}
+
+body{
+    background:linear-gradient(135deg,#2563eb,#0f172a);
+    min-height:100vh;
+    padding:20px;
+}
+
+.container{
+    max-width:900px;
+    margin:40px auto;
+    background:#fff;
+    padding:30px;
+    border-radius:20px;
+    box-shadow:0 15px 40px rgba(0,0,0,.2);
+}
+
+h1{
+    text-align:center;
+    color:#2563eb;
+    margin-bottom:20px;
+}
+
+.upload-box{
+    border:3px dashed #2563eb;
+    border-radius:12px;
+    padding:40px;
+    text-align:center;
+    cursor:pointer;
+    margin-bottom:20px;
+}
+
+input[type=file]{
+    display:none;
+}
+
+video{
+    width:100%;
+    margin-top:20px;
+    border-radius:12px;
+}
+
+select{
+    width:100%;
+    padding:14px;
+    border:2px solid #ddd;
+    border-radius:10px;
+    margin-top:20px;
+}
+
+button{
+    width:100%;
+    padding:14px;
+    border:none;
+    border-radius:10px;
+    background:#2563eb;
+    color:#fff;
+    font-size:18px;
+    cursor:pointer;
+    margin-top:20px;
+}
+
+button:hover{
+    background:#1d4ed8;
+}
+
+#status{
+    margin-top:20px;
+    text-align:center;
+    font-weight:bold;
+}
+
+.back{
+    display:block;
+    margin-top:20px;
+    text-align:center;
+    text-decoration:none;
+    color:#2563eb;
+    font-weight:bold;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="container">
+
+<h1>🎬 Compress Video</h1>
+
+<label for="videoInput" class="upload-box">
+
+<h2>📂 Upload Video</h2>
+
+<p>Select MP4, MOV or AVI file</p>
+
+</label>
+
+<input
+type="file"
+id="videoInput"
+accept="video/*">
+
+<video
+id="preview"
+controls
+style="display:none;">
+</video>
+
+<select id="quality">
+
+<option value="28">High Quality</option>
+
+<option value="32" selected>Medium Quality</option>
+
+<option value="38">Low Quality</option>
+
+</select>
+
+<button onclick="compressVideo()">
+
+Compress Video
+
+</button>
+
+<p id="status"></p>
+
+<a href="video-tools.html" class="back">
+
+⬅ Back to Video Tools
+
+</a>
+
+</div>
+
+<script>
+
+const videoInput =
+document.getElementById("videoInput");
+
+const preview =
+document.getElementById("preview");
+
+videoInput.addEventListener(
+
+"change",
+
+function(e){
+
+const file = e.target.files[0];
+
+if(!file) return;
+
+preview.src =
+URL.createObjectURL(file);
+
+preview.style.display =
+"block";
+
+}
+
+);
+
+async function compressVideo(){
+
+const file =
+videoInput.files[0];
+
+if(!file){
+
+alert("Please upload a video.");
+
+return;
+
+}
+
+const status =
+document.getElementById("status");
+
+status.innerText =
+"Loading FFmpeg...";
+
+try{
+
+const { FFmpeg } = FFmpegWASM;
+
+const ffmpeg = new FFmpeg();
+
+await ffmpeg.load();
+
+const quality =
+document.getElementById("quality").value;
+
+status.innerText =
+"Processing...";
+
+await ffmpeg.writeFile(
+
+"input.mp4",
+
+new Uint8Array(
+await file.arrayBuffer()
+)
+
+);
+
+await ffmpeg.exec([
+
+"-i",
+
+"input.mp4",
+
+"-vcodec",
+
+"libx264",
+
+"-crf",
+
+quality,
+
+"output.mp4"
+
+]);
+
+const data =
+await ffmpeg.readFile(
+"output.mp4"
+);
+
+const blob =
+new Blob(
+
+[data.buffer],
+
+{
+
+type:"video/mp4"
+
+}
+
+);
+
+const url =
+URL.createObjectURL(blob);
+
+const a =
+document.createElement("a");
+
+a.href = url;
+
+a.download =
+"compressed-video.mp4";
+
+a.click();
+
+status.innerText =
+"Compression completed.";
+
+}
+
+catch(error){
+
+console.log(error);
+
+status.innerText =
+"Error occurred.";
+
+}
+
+}
+
+</script>
+
+</body>
+
+</html>
