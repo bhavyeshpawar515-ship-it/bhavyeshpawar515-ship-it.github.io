@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport"
+content="width=device-width, initial-scale=1.0">
+
+<title>Video to GIF | SmartToolsHub</title>
+
+<script src="https://unpkg.com/@ffmpeg/ffmpeg@0.12.10/dist/umd/ffmpeg.js"></script>
+
+<link rel="stylesheet" href="style.css">
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial,sans-serif;
+}
+
+body{
+    background:linear-gradient(135deg,#2563eb,#0f172a);
+    min-height:100vh;
+    padding:20px;
+}
+
+.container{
+    max-width:900px;
+    margin:40px auto;
+    background:#fff;
+    padding:30px;
+    border-radius:20px;
+    box-shadow:0 10px 30px rgba(0,0,0,.2);
+}
+
+h1{
+    text-align:center;
+    color:#2563eb;
+    margin-bottom:20px;
+}
+
+.upload-box{
+    border:3px dashed #2563eb;
+    border-radius:12px;
+    padding:40px;
+    text-align:center;
+    cursor:pointer;
+}
+
+input[type=file]{
+    display:none;
+}
+
+video{
+    width:100%;
+    margin-top:20px;
+    border-radius:12px;
+    display:none;
+}
+
+input[type=number]{
+    width:100%;
+    padding:14px;
+    margin-top:20px;
+    border:2px solid #ddd;
+    border-radius:10px;
+}
+
+button{
+    width:100%;
+    padding:15px;
+    border:none;
+    border-radius:10px;
+    background:#2563eb;
+    color:#fff;
+    font-size:18px;
+    margin-top:20px;
+    cursor:pointer;
+}
+
+button:hover{
+    background:#1d4ed8;
+}
+
+#status{
+    text-align:center;
+    margin-top:20px;
+    font-weight:bold;
+}
+
+.back{
+    display:block;
+    text-align:center;
+    margin-top:20px;
+    text-decoration:none;
+    color:#2563eb;
+    font-weight:bold;
+}
+
+img{
+    width:100%;
+    margin-top:20px;
+    border-radius:12px;
+    display:none;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="container">
+
+<h1>🎞️ Video to GIF</h1>
+
+<label for="videoInput" class="upload-box">
+
+<h2>📂 Upload Video</h2>
+
+<p>Select MP4, AVI, MOV or MKV</p>
+
+</label>
+
+<input
+type="file"
+id="videoInput"
+accept="video/*">
+
+<video
+id="preview"
+controls>
+</video>
+
+<input
+type="number"
+id="duration"
+placeholder="GIF duration in seconds">
+
+<button onclick="convertToGif()">
+
+Convert to GIF
+
+</button>
+
+<p id="status"></p>
+
+<img id="gifPreview">
+
+<a href="video-tools.html" class="back">
+
+⬅ Back to Video Tools
+
+</a>
+
+</div>
+
+<script>
+
+const videoInput =
+document.getElementById("videoInput");
+
+const preview =
+document.getElementById("preview");
+
+videoInput.addEventListener(
+
+"change",
+
+function(e){
+
+const file = e.target.files[0];
+
+if(!file) return;
+
+preview.src =
+URL.createObjectURL(file);
+
+preview.style.display =
+"block";
+
+}
+
+);
+
+async function convertToGif(){
+
+const file =
+videoInput.files[0];
+
+if(!file){
+
+alert("Please upload a video.");
+
+return;
+
+}
+
+const duration =
+document.getElementById("duration").value || 5;
+
+const status =
+document.getElementById("status");
+
+status.innerText =
+"Processing...";
+
+alert(
+
+"ffmpeg-core.js, ffmpeg-core.wasm અને ffmpeg-core.worker.js files ઉમેર્યા પછી નીચેનો command વાપરો."
+
+);
+
+console.log(
+
+`ffmpeg -i input.mp4 -t ${duration} output.gif`
+
+);
+
+status.innerText =
+"FFmpeg setup required.";
+
+}
+
+</script>
+
+</body>
+
+</html>

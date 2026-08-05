@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport"
+content="width=device-width, initial-scale=1.0">
+
+<title>Merge Videos | SmartToolsHub</title>
+
+<script src="https://unpkg.com/@ffmpeg/ffmpeg@0.12.10/dist/umd/ffmpeg.js"></script>
+
+<link rel="stylesheet" href="style.css">
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial,sans-serif;
+}
+
+body{
+    background:linear-gradient(135deg,#2563eb,#0f172a);
+    min-height:100vh;
+    padding:20px;
+}
+
+.container{
+    max-width:900px;
+    margin:40px auto;
+    background:#fff;
+    padding:30px;
+    border-radius:20px;
+    box-shadow:0 10px 30px rgba(0,0,0,.2);
+}
+
+h1{
+    text-align:center;
+    color:#2563eb;
+    margin-bottom:20px;
+}
+
+.upload-box{
+    border:3px dashed #2563eb;
+    border-radius:12px;
+    padding:40px;
+    text-align:center;
+    cursor:pointer;
+}
+
+input[type=file]{
+    display:none;
+}
+
+.file-list{
+    margin-top:20px;
+}
+
+.file-item{
+    padding:12px;
+    margin:10px 0;
+    background:#f1f5f9;
+    border-radius:10px;
+}
+
+button{
+    width:100%;
+    padding:15px;
+    border:none;
+    border-radius:10px;
+    background:#2563eb;
+    color:#fff;
+    font-size:18px;
+    margin-top:20px;
+    cursor:pointer;
+}
+
+button:hover{
+    background:#1d4ed8;
+}
+
+#status{
+    text-align:center;
+    margin-top:20px;
+    font-weight:bold;
+}
+
+.back{
+    display:block;
+    text-align:center;
+    margin-top:20px;
+    color:#2563eb;
+    text-decoration:none;
+    font-weight:bold;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="container">
+
+<h1>🎬 Merge Videos</h1>
+
+<label for="videoInput" class="upload-box">
+
+<h2>📂 Select Videos</h2>
+
+<p>Select 2 or more videos</p>
+
+</label>
+
+<input
+type="file"
+id="videoInput"
+accept="video/*"
+multiple>
+
+<div
+id="fileList"
+class="file-list">
+
+</div>
+
+<button onclick="mergeVideos()">
+
+Merge Videos
+
+</button>
+
+<p id="status"></p>
+
+<a
+href="video-tools.html"
+class="back">
+
+⬅ Back to Video Tools
+
+</a>
+
+</div>
+
+<script>
+
+const videoInput =
+
+document.getElementById(
+
+"videoInput"
+
+);
+
+const fileList =
+
+document.getElementById(
+
+"fileList"
+
+);
+
+videoInput.addEventListener(
+
+"change",
+
+function(){
+
+fileList.innerHTML = "";
+
+Array.from(
+
+videoInput.files
+
+).forEach(
+
+(file,index)=>{
+
+fileList.innerHTML += `
+
+<div class="file-item">
+
+🎥 ${index+1}. ${file.name}
+
+</div>
+
+`;
+
+}
+
+);
+
+}
+
+);
+
+async function mergeVideos(){
+
+const files =
+
+videoInput.files;
+
+if(files.length < 2){
+
+alert(
+
+"Please select at least 2 videos."
+
+);
+
+return;
+
+}
+
+const status =
+
+document.getElementById(
+
+"status"
+
+);
+
+status.innerText =
+
+"Processing...";
+
+alert(
+
+"ffmpeg-core.js, ffmpeg-core.wasm અને ffmpeg-core.worker.js files ઉમેર્યા પછી નીચેનો command વાપરો."
+
+);
+
+console.log(
+
+`ffmpeg -f concat -safe 0 -i list.txt -c copy output.mp4`
+
+);
+
+status.innerText =
+
+"FFmpeg setup required.";
+
+}
+
+</script>
+
+</body>
+
+</html>

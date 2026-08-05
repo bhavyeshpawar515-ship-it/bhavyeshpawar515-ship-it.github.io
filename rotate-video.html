@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport"
+content="width=device-width, initial-scale=1.0">
+
+<title>Rotate Video | SmartToolsHub</title>
+
+<script src="https://unpkg.com/@ffmpeg/ffmpeg@0.12.10/dist/umd/ffmpeg.js"></script>
+
+<link rel="stylesheet" href="style.css">
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial,sans-serif;
+}
+
+body{
+    background:linear-gradient(135deg,#2563eb,#0f172a);
+    min-height:100vh;
+    padding:20px;
+}
+
+.container{
+    max-width:900px;
+    margin:40px auto;
+    background:#fff;
+    padding:30px;
+    border-radius:20px;
+    box-shadow:0 10px 30px rgba(0,0,0,.2);
+}
+
+h1{
+    text-align:center;
+    color:#2563eb;
+    margin-bottom:20px;
+}
+
+.upload-box{
+    border:3px dashed #2563eb;
+    border-radius:12px;
+    padding:40px;
+    text-align:center;
+    cursor:pointer;
+}
+
+input[type=file]{
+    display:none;
+}
+
+video{
+    width:100%;
+    margin-top:20px;
+    border-radius:12px;
+    display:none;
+}
+
+select{
+    width:100%;
+    padding:14px;
+    margin-top:20px;
+    border:2px solid #ddd;
+    border-radius:10px;
+    font-size:16px;
+}
+
+button{
+    width:100%;
+    padding:15px;
+    border:none;
+    border-radius:10px;
+    background:#2563eb;
+    color:#fff;
+    font-size:18px;
+    margin-top:20px;
+    cursor:pointer;
+}
+
+button:hover{
+    background:#1d4ed8;
+}
+
+#status{
+    text-align:center;
+    margin-top:20px;
+    font-weight:bold;
+}
+
+.back{
+    display:block;
+    text-align:center;
+    margin-top:20px;
+    color:#2563eb;
+    text-decoration:none;
+    font-weight:bold;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="container">
+
+<h1>🔄 Rotate Video</h1>
+
+<label for="videoInput" class="upload-box">
+
+<h2>📂 Upload Video</h2>
+
+<p>Select MP4, AVI, MOV or MKV</p>
+
+</label>
+
+<input
+type="file"
+id="videoInput"
+accept="video/*">
+
+<video
+id="preview"
+controls>
+</video>
+
+<select id="rotate">
+
+<option value="1">90° Clockwise</option>
+
+<option value="2">90° Anti-Clockwise</option>
+
+<option value="3">180° Rotate</option>
+
+</select>
+
+<button onclick="rotateVideo()">
+
+Rotate Video
+
+</button>
+
+<p id="status"></p>
+
+<a href="video-tools.html" class="back">
+
+⬅ Back to Video Tools
+
+</a>
+
+</div>
+
+<script>
+
+const videoInput =
+document.getElementById("videoInput");
+
+const preview =
+document.getElementById("preview");
+
+videoInput.addEventListener(
+
+"change",
+
+function(e){
+
+const file = e.target.files[0];
+
+if(!file) return;
+
+preview.src =
+URL.createObjectURL(file);
+
+preview.style.display =
+"block";
+
+}
+
+);
+
+async function rotateVideo(){
+
+const file =
+videoInput.files[0];
+
+if(!file){
+
+alert("Please upload a video.");
+
+return;
+
+}
+
+const rotate =
+document.getElementById("rotate").value;
+
+const status =
+document.getElementById("status");
+
+status.innerText =
+"Processing...";
+
+alert(
+
+"ffmpeg-core.js, ffmpeg-core.wasm અને ffmpeg-core.worker.js files ઉમેર્યા પછી FFmpeg command કામ કરશે."
+
+);
+
+console.log(
+
+`ffmpeg -i input.mp4 -vf transpose=${rotate} output.mp4`
+
+);
+
+status.innerText =
+"FFmpeg setup required.";
+
+}
+
+</script>
+
+</body>
+
+</html>
